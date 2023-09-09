@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="home">Home</a>
+      {{#if logged-in}}
+      <a href="dashboard">Dashboard</a>
+      <a href="logout">Logout</a>
+      <p>Hello {{username}}</p>
+      {{#else}}
+      <a href="login">Login</a>
+      {{/if}}
+    </nav>
+    <h1> Tech Talk </h1>
+  </header>
+  <main>
+    {{{main}}}
+  </main>
+</body>
+</html>
