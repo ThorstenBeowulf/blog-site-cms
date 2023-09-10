@@ -1,0 +1,32 @@
+[
+  {
+    "content": "wow",
+    "user_id": 3 ,
+    "blogpost_id": 1
+  },
+  {
+    "content": "crazy",
+    "user_id": 2 ,
+    "blogpost_id": 1
+  },
+  {
+    "content": "hell ye",
+    "user_id": 1 ,
+    "blogpost_id": 1
+  },
+  {
+    "content": "what?",
+    "user_id": 2 ,
+    "blogpost_id": 2
+  },
+  {
+    "content": "looking good",
+    "user_id": 3 ,
+    "blogpost_id": 3
+  },
+  {
+    "content": "crazy",
+    "user_id": 2 ,
+    "blogpost_id": 3
+  }
+]

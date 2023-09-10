@@ -1,27 +1,3 @@
-// user
-// id
-// username
-// password
-// posts ids fk
-// comments ids fk
-
-// blogpost
-// id
-// userid fk
-// username
-// comments ids fk
-// title
-// content
-// date created
-
-// comment
-// id
-// userid fk
-// username
-// post id fk
-// content
-// date created
-
 // a post has many comments
 // a post has one user
 
@@ -39,11 +15,13 @@ const User = require('./user');
 const BlogPost = require('./blogpost');
 const Comment = require('./comment');
 
-BlogPost.belongsTo(User);
-Comment.belongsTo(User);
-Comment.belongsTo(BlogPost);
 User.hasMany(BlogPost);
+BlogPost.belongsTo(User);
 User.hasMany(Comment);
+Comment.belongsTo(User);
 BlogPost.hasMany(Comment);
+Comment.belongsTo(BlogPost);
+
+
 
 module.exports = { User, BlogPost, Comment };

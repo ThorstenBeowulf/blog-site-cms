@@ -1,1 +1,6 @@
-
+{{#each blogPosts as |blogpost|}}
+<div>{{blogpost.title}}</div>
+{{!-- look at proper ref for username --}}
+<div>{{blogpost.username}}</div>
+<div>{{blogpost.body}}</div>
+{{/each}}
