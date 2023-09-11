@@ -3,18 +3,22 @@ const express = require('express');
 const session = require('express-session');
 const expBars = require('express-handlebars');
 const routes = require('./controllers');
-const helpers = require('./utils/helpers');
+const helper = require('./utils/util');
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-// look at if helpers is needed in handlebars
-const Bars = expBars.create(helpers);
+const Bars = expBars.create(helper);
 
 const sessionObj = {
   secret: 'secret key',
-  cookie: {},
+  cookie: {
+    maxAge: 300000,
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({

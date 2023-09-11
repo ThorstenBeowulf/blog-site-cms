@@ -1,4 +1,4 @@
-const router = router('express').Router();
+const router = require('express').Router();
 const { User, BlogPost, Comment } = require('../models');
 const checkAuth = require('../utils/authRedir');
 
@@ -28,78 +28,66 @@ router.get('/', async (req, res) => {
   }
 });
 
-// login
+// post view
 
-router.get('/login', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const blogPostData = await BlogPost.findAll({
+    const blogPostData = await BlogPost.findByPk(req.params.id, {
       include: [
         {
           model: User,
           attributes: ['username'],
         },
+        {
+          model: Comment,
+        },
       ],
     });
 
-    const blogPosts = blogPostData.map((blogPost) =>
-      blogPost.get({ plain: true })
-    );
+    const blogPosts = blogPostData.get({ plain: true });
 
-    res.render('login', {
-      blogPosts,
+    res.render('blogpost', {
+      ...blogPosts,
       logged_in: req.session.logged_in,
     });
   } catch (error) {
     res.status(500).json(error);
   }
+});
+
+// login
+
+router.get('/login', async (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect('/dashboard');
+    return;
+  }
+  res.render('login');
 });
 
 // signup
 
 router.get('/signup', async (req, res) => {
-  try {
-    const blogPostData = await BlogPost.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['username'],
-        },
-      ],
-    });
-
-    const blogPosts = blogPostData.map((blogPost) =>
-      blogPost.get({ plain: true })
-    );
-
-    res.render('homepage', {
-      blogPosts,
-      logged_in: req.session.logged_in,
-    });
-  } catch (error) {
-    res.status(500).json(error);
+  if (req.session.logged_in) {
+    res.redirect('/dashboard');
+    return;
   }
+  res.render('signup');
 });
 
-// profile
+// dashboard
 
-router.get('/dashboard/:id', checkAuth, async (req, res) => {
+router.get('/dashboard', checkAuth, async (req, res) => {
   try {
-    const blogPostData = await BlogPost.findAll({
-      where: {user_id: req.params.id},
-      include: [
-        {
-          model: User,
-          attributes: ['username'],
-        },
-      ],
+    const userPostData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: BlogPost }],
     });
 
-    const blogPosts = blogPostData.map((blogPost) =>
-      blogPost.get({ plain: true })
-    );
+    const blogPosts = userPostData.get({ plain: true });
 
     res.render('dashboard', {
-      blogPosts,
+      ...blogPosts,
       logged_in: req.session.logged_in,
     });
   } catch (error) {

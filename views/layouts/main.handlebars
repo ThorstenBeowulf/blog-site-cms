@@ -8,19 +8,22 @@
 <body>
   <header>
     <nav>
-      <a href="home">Home</a>
+      <a href="/">Home</a>
+      <a href="/dashboard">Dashboard</a>
       {{#if logged-in}}
-      <a href="dashboard">Dashboard</a>
-      <a href="logout">Logout</a>
+      <a href="/logout">Logout</a>
       <p>Hello {{username}}</p>
       {{else}}
       <a href="login">Login</a>
       {{/if}}
     </nav>
-    <h1> Tech Talk </h1>
+    <h1>Another JS Developer Blog</h1>
   </header>
   <main>
     {{{body}}}
   </main>
+  {{#if logged_in}}
+  <script src="/js/logout.js"></script>
+  {{/if}}
 </body>
 </html>
